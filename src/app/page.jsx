@@ -1,16 +1,133 @@
-// pages/index.js
 "use client";
+import { useState } from "react";
 import RestaurantHeader from "../Components/RestaurantHeader";
 import MenuCategory from "../Components/MenuCategory";
 import MenuItem from "../Components/MenuItem";
 import CategoryMenu from "../Components/CategoryMenu";
 import Cart from "../Components/Cart";
-import { useState } from "react";
 import confetti from "canvas-confetti";
+
+const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    tableNumber: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const orderDetails = {
+      customerInfo: formData,
+      items: cartItems,
+      total: cartItems.reduce((sum, item) => sum + item.price, 0),
+    };
+
+    onSubmit(orderDetails);
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 w-96 max-w-[90%]">
+        <h2 className="text-xl font-bold mb-4">Complete Your Order</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              type="text"
+              required
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              required
+              pattern="[0-9]{10}"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+              value={formData.phone}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Table Number
+            </label>
+            <select
+              required
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+              value={formData.tableNumber}
+              onChange={(e) =>
+                setFormData({ ...formData, tableNumber: e.target.value })
+              }
+            >
+              <option value="">Select Table</option>
+              {[...Array(14)].map((_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  Table {i + 1}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mt-4">
+            <h3 className="font-medium mb-2">Order Summary</h3>
+            <div className="space-y-2">
+              {cartItems.map((item, index) => (
+                <div key={index} className="flex justify-between text-sm">
+                  <span>{item.name}</span>
+                  <span>₹{item.price}</span>
+                </div>
+              ))}
+              <div className="border-t pt-2 font-bold">
+                <div className="flex justify-between">
+                  <span>Total</span>
+                  <span>
+                    ₹{cartItems.reduce((sum, item) => sum + item.price, 0)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-2 mt-6">
+            <button
+              type="button"
+              onClick={onCancel}
+              className="flex-1 px-4 py-2 border border-gray-300 text-white rounded-md text-sm"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="flex-1 px-4 py-2 bg-gradient-to-br from-[#723FCD] to-[#DB9FF5] text-white rounded-md text-sm"
+            >
+              Confirm Order
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default function Home() {
   const [cartItems, setCartItems] = useState([]);
   const [itemCounts, setItemCounts] = useState({});
+  const [showOrderForm, setShowOrderForm] = useState(false);
+
   const categories = [
     { id: "Must Try", name: "Must Try 🔥" },
     { id: "Fried Items", name: "Fried Items" },
@@ -65,6 +182,37 @@ export default function Home() {
       spread: 90,
       origin: { x: 0, y: 0.9 },
     });
+  };
+
+  const handleOrderSubmit = async (orderDetails) => {
+    console.log("Order submitted:", orderDetails);
+    try {
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderDetails),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit order", error);
+      }
+
+      const result = await response.json();
+      console.log("Order submission result:", result);
+
+      if (result.success) {
+        fireConfetti();
+        setShowOrderForm(false);
+        setCartItems([]); // Clear cart after order
+        setItemCounts({}); // Reset item counts
+      } else {
+        console.error("Order submission failed:", result.message);
+      }
+    } catch (error) {
+      console.error("Error submitting order:", error);
+    }
   };
 
   return (
@@ -332,6 +480,7 @@ export default function Home() {
           {cartItems.length !== 0 && (
             <button
               onClick={() => {
+                setShowOrderForm(true);
                 const cartElement = document.getElementById("cart");
                 if (cartElement) {
                   cartElement.scrollIntoView({
@@ -339,7 +488,7 @@ export default function Home() {
                     block: "start",
                   });
                 }
-                fireConfetti();
+                // fireConfetti();
               }}
               className="fire-btn fixed z-40 bottom-8 left-8 text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
             >
@@ -347,6 +496,12 @@ export default function Home() {
             </button>
           )}
         </div>
+        <OrderForm
+          cartItems={cartItems}
+          onSubmit={handleOrderSubmit}
+          onCancel={() => setShowOrderForm(false)}
+          isVisible={showOrderForm}
+        />
       </div>
       <div className=" p-1 border-t text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
         Created By&nbsp;
