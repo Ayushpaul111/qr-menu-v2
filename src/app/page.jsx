@@ -211,7 +211,7 @@ export default function Home() {
         console.error("Order submission failed:", result.message);
       }
     } catch (error) {
-      console.error("Error submitting order:", error);
+      console.error("Error submitting order from page.jsx:", error);
     }
   };
 
