@@ -1,3 +1,4 @@
+// pages/index.js
 "use client";
 import RestaurantHeader from "../Components/RestaurantHeader";
 import MenuCategory from "../Components/MenuCategory";
@@ -340,7 +341,7 @@ export default function Home() {
                 }
                 fireConfetti();
               }}
-              className="fire-btn fixed z-50 bottom-8 left-8 text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
+              className="fire-btn fixed z-40 bottom-8 left-8 text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
             >
               Order
             </button>
