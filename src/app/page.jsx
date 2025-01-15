@@ -6,6 +6,7 @@ import MenuItem from "../Components/MenuItem";
 import CategoryMenu from "../Components/CategoryMenu";
 import Cart from "../Components/Cart";
 import confetti from "canvas-confetti";
+import SuccessCard from "@/Components/SuccessCard";
 
 const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,8 +35,8 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-96 max-w-[90%]">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ">
+      <div className="bg-white rounded-lg p-6 w-96 max-w-[90%] max-h-[90%] overflow-y-auto">
         <h2 className="text-xl font-bold mb-4">Complete Your Order</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -59,7 +60,7 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
             <input
               type="tel"
               required
-              pattern="[0-9]{10}"
+              // pattern="[0-9]{10}"
               className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
               value={formData.phone}
               onChange={(e) =>
@@ -113,7 +114,7 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
               type="button"
               onClick={onCancel}
               disabled={isSubmitting}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md text-sm disabled:opacity-50"
+              className="flex-1 px-4 py-2 border border-gray-300 text-white rounded-md text-sm disabled:opacity-50"
             >
               Cancel
             </button>
@@ -161,6 +162,8 @@ export default function Home() {
   const [cartItems, setCartItems] = useState([]);
   const [itemCounts, setItemCounts] = useState({});
   const [showOrderForm, setShowOrderForm] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successDetails, setSuccessDetails] = useState(null);
 
   const categories = [
     { id: "Must Try", name: "Must Try 🔥" },
@@ -236,16 +239,35 @@ export default function Home() {
       console.log("Order submission result:", result);
 
       if (result.success) {
-        fireConfetti();
+        const successData = {
+          ...orderDetails,
+          orderId: Math.random().toString(36).substr(2, 9).toUpperCase(),
+          orderTime: new Date().toLocaleString("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          }),
+        };
+        setSuccessDetails(successData);
         setShowOrderForm(false);
-        setCartItems([]); // Clear cart after order
-        setItemCounts({}); // Reset item counts
+        setShowSuccess(true);
+        fireConfetti();
       } else {
         console.error("Order submission failed:", result.message);
       }
     } catch (error) {
       console.error("Error submitting order from page.jsx:", error.message);
     }
+  };
+
+  const handleSuccessClose = () => {
+    setShowSuccess(false);
+    setCartItems([]);
+    setItemCounts({});
+    setSuccessDetails(null);
   };
 
   return (
@@ -511,22 +533,40 @@ export default function Home() {
             onRemoveItem={handleRemoveFromCart}
           />
           {cartItems.length !== 0 && (
-            <button
-              onClick={() => {
-                setShowOrderForm(true);
-                const cartElement = document.getElementById("cart");
-                if (cartElement) {
-                  cartElement.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-                }
-                // fireConfetti();
-              }}
-              className="fire-btn fixed z-40 bottom-8 left-8 text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
-            >
-              Order
-            </button>
+            <>
+              <button
+                onClick={() => {
+                  setShowOrderForm(true);
+                  // const cartElement = document.getElementById("cart");
+                  // if (cartElement) {
+                  //   cartElement.scrollIntoView({
+                  //     behavior: "smooth",
+                  //     block: "start",
+                  //   });
+                  // }
+                  // fireConfetti();
+                }}
+                className="fire-btn fixed z-40 bottom-8 left-[35%] text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
+              >
+                Order
+              </button>
+              <button
+                onClick={() => {
+                  // setShowOrderForm(true);
+                  const cartElement = document.getElementById("cart");
+                  if (cartElement) {
+                    cartElement.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }
+                  // fireConfetti();
+                }}
+                className="fire-btn fixed z-40 bottom-8 left-8 text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
+              >
+                Cart
+              </button>
+            </>
           )}
         </div>
         <OrderForm
@@ -535,6 +575,12 @@ export default function Home() {
           onCancel={() => setShowOrderForm(false)}
           isVisible={showOrderForm}
         />
+        {showSuccess && successDetails && (
+          <SuccessCard
+            orderDetails={successDetails}
+            onClose={handleSuccessClose}
+          />
+        )}
       </div>
       <div className=" p-1 border-t text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
         Created By&nbsp;

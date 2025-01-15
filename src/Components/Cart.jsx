@@ -55,9 +55,12 @@ const Cart = ({ cartItems, onRemoveItem, id }) => {
       )}
       <hr />
       <div className="mt-4 flex justify-center text-center">
-        <h2>
+        {/* <button onClick={} className="fire-btn focus:outline-none text-white bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 shadow-lg transition-transform duration-300">
+          Confirm
+        </button> */}
+        {/* <h2>
           Select items and call someone to show them the order and confirm it.
-        </h2>
+        </h2> */}
       </div>
     </div>
   );
