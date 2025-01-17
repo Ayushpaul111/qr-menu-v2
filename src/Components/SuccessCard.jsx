@@ -1,4 +1,3 @@
-import React from "react";
 import { Check } from "lucide-react";
 
 const SuccessCard = ({ orderDetails, onClose }) => {
@@ -6,7 +5,7 @@ const SuccessCard = ({ orderDetails, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-900 rounded-3xl w-full max-w-md relative pb-8">
+      <div className="bg-gray-900 rounded-3xl relative pb-8 p-6 w-96 max-w-[90%]">
         {/* Top Circle with Check Icon */}
         <div className="absolute -top-12 left-1/2 -translate-x-1/2">
           <div className="bg-gray-900 rounded-full p-4">
@@ -34,14 +33,14 @@ const SuccessCard = ({ orderDetails, onClose }) => {
           </div>
 
           {/* Order Details Grid */}
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="bg-gray-800 rounded-xl p-4">
+          <div className="grid grid-cols-2 gap-4 mb-8 text-left">
+            <div className=" border border-gray-700 rounded-xl p-4">
               <p className="text-gray-400 text-sm mb-1">Table Number</p>
               <p className="text-white font-medium">
                 {orderDetails.customerInfo.tableNumber}
               </p>
             </div>
-            <div className="bg-gray-800 rounded-xl p-4">
+            <div className="border border-gray-700 rounded-xl p-4">
               <p className="text-gray-400 text-sm mb-1">Customer Name</p>
               <p className="text-white font-medium">
                 {orderDetails.customerInfo.name}
