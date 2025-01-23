@@ -8,6 +8,8 @@ import Cart from "../Components/Cart";
 import confetti from "canvas-confetti";
 import SuccessCard from "@/Components/SuccessCard";
 import OrderForm from "@/Components/OrderForm";
+import WaiterCallForm from "@/Components/WaiterCallForm";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const [cartItems, setCartItems] = useState([]);
@@ -15,6 +17,7 @@ export default function Home() {
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [successDetails, setSuccessDetails] = useState(null);
+  const [showWaiterCall, setShowWaiterCall] = useState(false);
 
   const categories = [
     { id: "Must Try", name: "Must Try 🔥" },
@@ -31,25 +34,18 @@ export default function Home() {
   ];
 
   const handleAddToCart = (item) => {
-    // Add item to cart
     setCartItems((prevItems) => [...prevItems, item]);
-
-    // Update count
     setItemCounts((prevCounts) => ({
       ...prevCounts,
       [item.name]: (prevCounts[item.name] || 0) + 1,
     }));
+    toast.success(`${item.name} added to cart`);
   };
 
   const handleRemoveFromCart = (index) => {
-    // Get the item that will be removed
     const itemToRemove = cartItems[index];
-
-    // Remove item from cart
     const newCartItems = cartItems.filter((_, i) => i !== index);
     setCartItems(newCartItems);
-
-    // Decrease the count of the item
     setItemCounts((prevCounts) => ({
       ...prevCounts,
       [itemToRemove.name]: Math.max(
@@ -57,7 +53,9 @@ export default function Home() {
         0
       ),
     }));
+    toast(`${itemToRemove.name} removed`, { icon: "🗑️" });
   };
+
   const fireConfetti = () => {
     confetti({
       particleCount: 300,
@@ -73,6 +71,7 @@ export default function Home() {
   };
 
   const handleOrderSubmit = async (orderDetails) => {
+    const orderToast = toast.loading("Submitting order...");
     try {
       const response = await fetch("/api/submit", {
         method: "POST",
@@ -83,16 +82,16 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to submit order", error);
+        throw new Error("Failed to submit order");
       }
 
       const result = await response.json();
-      console.log("Order submission result:", result);
 
       if (result.success) {
+        toast.success("Order placed successfully!", { id: orderToast });
+
         const successData = {
           ...orderDetails,
-          // orderId: Math.random().toString(36).substr(2, 9).toUpperCase(),
           orderTime: new Date().toLocaleString("en-US", {
             hour: "numeric",
             minute: "numeric",
@@ -107,9 +106,12 @@ export default function Home() {
         setShowSuccess(true);
         fireConfetti();
       } else {
-        console.error("Order submission failed:", result.message);
+        toast.error(`Order submission failed: ${result.message}`, {
+          id: orderToast,
+        });
       }
     } catch (error) {
+      toast.error("Error submitting order", { id: orderToast });
       console.error("Error submitting order from page.jsx:", error.message);
     }
   };
@@ -377,12 +379,11 @@ export default function Home() {
             // reviews={10}
           />
         </MenuCategory>
+        <WaiterCallForm
+          isVisible={showWaiterCall}
+          onClose={() => setShowWaiterCall(false)}
+        />
         <div className="pb-10">
-          <Cart
-            id="cart"
-            cartItems={cartItems}
-            onRemoveItem={handleRemoveFromCart}
-          />
           {cartItems.length !== 0 && (
             <>
               <button
@@ -432,6 +433,17 @@ export default function Home() {
             onClose={handleSuccessClose}
           />
         )}
+        <Cart
+          id="cart"
+          cartItems={cartItems}
+          onRemoveItem={handleRemoveFromCart}
+        />
+        <button
+          onClick={() => setShowWaiterCall(true)}
+          className="fire-btn fixed z-40 bottom-24 right-8 text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
+        >
+          Call Waiter
+        </button>
       </div>
       <div className=" p-1 border-t text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
         Created By&nbsp;

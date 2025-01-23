@@ -41,7 +41,7 @@ const CategoryMenu = ({ categories }) => {
 
       {/* Conditional rendering of the category menu */}
       <div
-        className={`fixed bottom-24 right-8 bg-white shadow-lg p-4 rounded-lg z-10 transform transition-all duration-300 ease-in-out ${
+        className={`fixed z-50 bottom-24 right-8 bg-white shadow-lg p-4 rounded-lg z-10 transform transition-all duration-300 ease-in-out ${
           isMenuOpen
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-3 pointer-events-none"
