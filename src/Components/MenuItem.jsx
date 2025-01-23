@@ -7,7 +7,8 @@ const MenuItem = ({
   imageUrl,
   rating,
   count,
-  onAdd,
+  onIncrement,
+  onDecrement,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
@@ -65,11 +66,32 @@ const MenuItem = ({
             className="w-24 h-24 object-cover rounded-lg mb-2 cursor-pointer hover:opacity-90 transition-opacity"
             onClick={toggleModal}
           />
-          <button onClick={onAdd}>
-            <span className="button_top">
-              {count > 0 ? `(${count}) Added` : "Add"}
-            </span>
-          </button>
+          <div className="flex items-center space-x-2">
+            {count === 0 && (
+              <button onClick={onIncrement}>
+                <span className="button_top">
+                  {count > 0 ? `(${count})` : "Add"}
+                </span>
+              </button>
+            )}
+            {count > 0 && (
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={onDecrement}
+                  className="text-red-600 bg-red-100 px-2 py-1 rounded"
+                >
+                  -
+                </button>
+                <span>{count}</span>
+                <button
+                  onClick={onIncrement}
+                  className="text-green-600 bg-green-100 px-2 py-1 rounded"
+                >
+                  +
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -128,11 +150,32 @@ const MenuItem = ({
                 <button onClick={toggleModal}>
                   <span className="button_top">Close</span>
                 </button>
-                <button onClick={onAdd}>
-                  <span className="button_top">
-                    {count > 0 ? `(${count}) Added` : "Add"}
-                  </span>
-                </button>
+                <div className="flex items-center space-x-2">
+                  {count === 0 && (
+                    <button onClick={onIncrement}>
+                      <span className="button_top">
+                        {count > 0 ? `(${count})` : "Add"}
+                      </span>
+                    </button>
+                  )}
+                  {count > 0 && (
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={onDecrement}
+                        className="text-red-600 bg-red-100 px-2 py-1 rounded"
+                      >
+                        -
+                      </button>
+                      <span>{count}</span>
+                      <button
+                        onClick={onIncrement}
+                        className="text-green-600 bg-green-100 px-2 py-1 rounded"
+                      >
+                        +
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
