@@ -17,7 +17,7 @@ const Cart = ({ cartItems, onIncrement, onDecrement, id }) => {
   return (
     <div
       id={id}
-      className="p-4 bg-white rounded-lg shadow-lg mt-4 transition-all duration-300"
+      className="p-4 bg-white rounded-lg shadow-lg mt-4 transition-all duration-300 mb-12"
     >
       <h2 className="text-lg font-semibold">Added Items</h2>
       {cartItems.length === 0 ? (

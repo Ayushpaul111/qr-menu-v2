@@ -251,7 +251,7 @@ export default function Home() {
           Call Waiter
         </button>
       </div>
-      <div className=" p-1 border-t text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
+      <div className="fixed bottom-0 w-full p-1 border-t text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
         Created By&nbsp;
         <a
           href="https://ehike.in"

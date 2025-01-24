@@ -33,7 +33,7 @@ const WaiterCallForm = ({ isVisible, onClose }) => {
         throw new Error("Failed to submit waiter call");
       }
 
-      toast.success("Waiter called successfully!", { id: callingToast });
+      toast.success("Waiter on the way!", { id: callingToast });
       onClose();
     } catch (error) {
       toast.error("Failed to call waiter", { id: callingToast });
@@ -48,7 +48,7 @@ const WaiterCallForm = ({ isVisible, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-96 max-w-[90%]">
-        <h2 className="text-xl font-bold mb-4">Call Waiter</h2>
+        <h2 className="text-xl font-bold mb-4">Call A Waiter</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -75,7 +75,7 @@ const WaiterCallForm = ({ isVisible, onClose }) => {
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md text-sm disabled:opacity-50"
+              className="flex-1 px-4 py-2 border border-gray-300 text-white rounded-md text-sm disabled:opacity-50"
             >
               Cancel
             </button>
