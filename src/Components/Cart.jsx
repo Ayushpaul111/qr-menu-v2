@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 export default function Cart({ items = [], onIncrement, onDecrement }) {
   const [isMinimized, setIsMinimized] = useState(false);
+  const cartRef = useRef(null);
 
-  // Calculate total price using the quantity from each item
+  // Calculate total price
   const totalPrice = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -22,10 +23,30 @@ export default function Cart({ items = [], onIncrement, onDecrement }) {
     return acc;
   }, {});
 
+  // Handle clicks outside the cart
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setIsMinimized(true);
+      }
+    };
+
+    // Add event listener when cart is open
+    if (!isMinimized) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMinimized]);
+
   if (items.length === 0) return null;
 
   return (
     <motion.div
+      ref={cartRef}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       className="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-30"
