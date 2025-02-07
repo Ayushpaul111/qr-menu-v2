@@ -52,9 +52,27 @@ const menuItems = [
     image: "https://images.unsplash.com/photo-1564355808539-22fda35bed7e",
     rating: 4.7,
   },
+  {
+    id: "5",
+    name: "Special Biniyani",
+    price: 210,
+    description: "Special Biniyani with special spices",
+    category: "Must Try🔥",
+    isVeg: true,
+    image:
+      "https://media.istockphoto.com/id/1410130688/photo/mutton-biryani-served-in-a-golden-dish-isolated-on-dark-background-side-view-indian-food.jpg?s=612x612&w=0&k=20&c=ueFrghYZuKAty-rFVe5dtMtNIbn0jaUsSvCUwTVOmd8=",
+    rating: 5,
+  },
 ];
 
-const categories = ["All", "Pizza", "Burgers", "Main Course", "Desserts"];
+const categories = [
+  "All",
+  "Must Try🔥",
+  "Pizza",
+  "Burgers",
+  "Main Course",
+  "Desserts",
+];
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -206,7 +224,7 @@ export default function Home() {
       {/* Search and Filters */}
       <div className="px-3 sm:px-4 py-3 sm:py-6">
         <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6">
-          <div className="relative">
+          <div className="relative rounded-lg shadow-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
@@ -218,7 +236,7 @@ export default function Home() {
           </div>
 
           {/* Veg/Non-veg filter */}
-          <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 ">
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 justify-center">
             <button
               onClick={() => setFilterVeg(true)}
               className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
@@ -296,7 +314,7 @@ export default function Home() {
 
       {/* Fixed Buttons */}
       {cartItems.length > 0 && (
-        <div className="fixed bottom-20 sm:bottom-10 left-1/2 transform -translate-x-1/2 flex gap-4 z-40">
+        <div className="fixed bottom-10 sm:bottom-10 left-1/2 transform -translate-x-1/2 flex gap-4 z-40">
           <button
             onClick={() => setShowOrderForm(true)}
             className="bg-orange-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:bg-orange-600 transition-colors text-sm sm:text-base"

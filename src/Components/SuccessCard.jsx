@@ -1,11 +1,17 @@
 import { Check } from "lucide-react";
+import { motion } from "framer-motion";
 
 const SuccessCard = ({ orderDetails, onClose }) => {
   if (!orderDetails) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-900 rounded-3xl relative pb-8 p-6 w-96 max-w-[90%]">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    >
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl relative pb-10 p-8 w-96 max-w-[90%] shadow-2xl">
         {/* Top Circle with Check Icon */}
         <div className="absolute -top-12 left-1/2 -translate-x-1/2">
           <div className="bg-gray-900 rounded-full p-4">
@@ -66,7 +72,7 @@ const SuccessCard = ({ orderDetails, onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

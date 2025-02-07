@@ -95,7 +95,7 @@ export default function Cart({ items = [], onIncrement, onDecrement }) {
       {isMinimized && (
         <div className="p-4 bg-white border-t border-gray-200">
           <div className="flex justify-between items-center">
-            <span className="font-medium">Cart Total:</span>
+            <span className="font-medium">Total Amount:</span>
             <span className="text-lg font-semibold">₹{totalPrice}</span>
           </div>
         </div>

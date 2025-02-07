@@ -13,19 +13,19 @@ const MenuItem = ({
   onIncrement,
   onDecrement,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [shouldRender, setShouldRender] = useState(false);
 
-  useEffect(() => {
-    if (isModalOpen) {
-      setShouldRender(true);
-    } else {
-      const timer = setTimeout(() => {
-        setShouldRender(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isModalOpen]);
+  // useEffect(() => {
+  //   if (isModalOpen) {
+  //     setShouldRender(true);
+  //   } else {
+  //     const timer = setTimeout(() => {
+  //       setShouldRender(false);
+  //     }, 300);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isModalOpen]);
 
   return (
     <motion.div
