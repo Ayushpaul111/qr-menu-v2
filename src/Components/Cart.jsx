@@ -12,7 +12,7 @@ export default function Cart({ items = [], onIncrement, onDecrement }) {
     0
   );
 
-  // Create an object to store unique items with their quantities
+  // Create unique cart items
   const cartItems = items.reduce((acc, item) => {
     if (!acc[item.id]) {
       acc[item.id] = {
@@ -31,16 +31,16 @@ export default function Cart({ items = [], onIncrement, onDecrement }) {
       }
     };
 
-    // Add event listener when cart is open
-    if (!isMinimized) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    // Add event listener to document
+    document.addEventListener("touchstart", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Cleanup listener
     return () => {
+      document.removeEventListener("touchstart", handleClickOutside);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isMinimized]);
+  }, []);
 
   if (items.length === 0) return null;
 
