@@ -10,7 +10,7 @@ const WaiterCallForm = ({ isVisible, onClose }) => {
 
     // Ensure table is selected
     if (!tableNumber) {
-      toast.error("Please select a table number");
+      toast.error("Please select your table number");
       return;
     }
 
