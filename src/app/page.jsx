@@ -19,7 +19,7 @@ const menuItems = [
     description: "Loaded with fresh vegetables and herbs",
     category: "Pizza",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg", // Garden Fresh Pizza
     rating: 4.5,
   },
   {
@@ -29,7 +29,7 @@ const menuItems = [
     description: "Juicy chicken patty with fresh lettuce",
     category: "Burgers",
     isVeg: false,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1639566/pexels-photo-1639566.jpeg", // Classic Chicken Burger
     rating: 4.8,
   },
   {
@@ -39,7 +39,7 @@ const menuItems = [
     description: "Grilled cottage cheese with Indian spices",
     category: "Main Course",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg", // Paneer Tikka
     rating: 4.3,
   },
   {
@@ -49,7 +49,7 @@ const menuItems = [
     description: "Rich chocolate brownie with vanilla ice cream",
     category: "Desserts",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg", // Chocolate Brownie
     rating: 4.7,
   },
   {
@@ -59,8 +59,7 @@ const menuItems = [
     description: "Fiery chicken curry with traditional spices",
     category: "Must Try🔥",
     isVeg: false,
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtnvAOajH9gS4C30cRF7rD_voaTAKly2Ntaw&s",
+    image: "https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg", // Spicy Chicken Masala
     rating: 4.9,
   },
   {
@@ -70,7 +69,7 @@ const menuItems = [
     description: "Layered pasta with fresh vegetables and cheese",
     category: "Main Course",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg", // Vegetable Lasagna
     rating: 4.4,
   },
   {
@@ -80,7 +79,7 @@ const menuItems = [
     description: "Slow-cooked pulled pork with tangy BBQ sauce",
     category: "Burgers",
     isVeg: false,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1639566/pexels-photo-1639566.jpeg", // BBQ Pulled Pork Sandwich
     rating: 4.7,
   },
   {
@@ -90,7 +89,7 @@ const menuItems = [
     description: "Fresh greens with feta, olives, and Mediterranean dressing",
     category: "Main Course",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg", // Greek Salad
     rating: 4.3,
   },
   {
@@ -100,7 +99,7 @@ const menuItems = [
     description: "Spanish rice dish with mixed seafood",
     category: "Must Try🔥",
     isVeg: false,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg", // Seafood Paella
     rating: 4.8,
   },
   {
@@ -110,7 +109,7 @@ const menuItems = [
     description: "Classic pizza with fresh mozzarella and basil",
     category: "Pizza",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg", // Margherita Pizza
     rating: 4.6,
   },
   {
@@ -120,7 +119,7 @@ const menuItems = [
     description: "Colorful bowl with roasted vegetables and quinoa",
     category: "Main Course",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg", // Vegan Buddha Bowl
     rating: 4.5,
   },
   {
@@ -130,7 +129,7 @@ const menuItems = [
     description: "Battered fish with fresh slaw and lime",
     category: "Must Try🔥",
     isVeg: false,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg", // Crispy Fish Tacos
     rating: 4.7,
   },
   {
@@ -140,7 +139,7 @@ const menuItems = [
     description: "Creamy rice with wild mushrooms and parmesan",
     category: "Main Course",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg", // Mushroom Risotto
     rating: 4.4,
   },
   {
@@ -150,7 +149,7 @@ const menuItems = [
     description: "Spicy Korean-style burger with kimchi",
     category: "Burgers",
     isVeg: false,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1639566/pexels-photo-1639566.jpeg", // Korean BBQ Burger
     rating: 4.6,
   },
   {
@@ -160,7 +159,7 @@ const menuItems = [
     description: "Classic Italian coffee-flavored dessert",
     category: "Desserts",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg", // Tiramisu
     rating: 4.8,
   },
   {
@@ -170,7 +169,7 @@ const menuItems = [
     description: "Pizza topped with assorted fresh vegetables",
     category: "Pizza",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg", // Vegetarian Pizza
     rating: 4.5,
   },
   {

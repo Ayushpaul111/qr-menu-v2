@@ -37,10 +37,46 @@ const MenuItem = React.memo(
           />
           <div
             className={`absolute top-2 right-2 ${
-              isVeg ? "bg-green-500" : "bg-red-500"
-            } text-white px-2 py-1 rounded-full text-xs`}
+              isVeg ? "bg-white" : "bg-white"
+            } text-white px-1 py-1 rounded-md text-xs`}
           >
-            {isVeg ? "Veg" : "Non-veg"}
+            {isVeg ? (
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="5"
+                  y="5"
+                  width="90"
+                  height="90"
+                  stroke="green"
+                  stroke-width="6"
+                  fill="none"
+                />
+                <circle cx="50" cy="50" r="25" fill="green" />
+              </svg>
+            ) : (
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="5"
+                  y="5"
+                  width="90"
+                  height="90"
+                  stroke="red"
+                  stroke-width="6"
+                  fill="none"
+                />
+                <polygon points="50,25 20,75 80,75" fill="red" />
+              </svg>
+            )}
           </div>
         </div>
         <div className="p-3 sm:p-4">
