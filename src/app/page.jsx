@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import RestaurantHeader from "../Components/RestaurantHeader";
 import MenuItem from "../Components/MenuItem";
-import WaiterCallForm from "../components/WaiterCallForm";
+import WaiterCallForm from "../Components/WaiterCallForm";
 import Cart from "../Components/Cart";
 import confetti from "canvas-confetti";
 import SuccessCard from "@/Components/SuccessCard";
