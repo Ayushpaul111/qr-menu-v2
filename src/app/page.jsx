@@ -19,7 +19,7 @@ const menuItems = [
     description: "Loaded with fresh vegetables and herbs",
     category: "Pizza",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
     rating: 4.5,
   },
   {
@@ -29,7 +29,7 @@ const menuItems = [
     description: "Juicy chicken patty with fresh lettuce",
     category: "Burgers",
     isVeg: false,
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
     rating: 4.8,
   },
   {
@@ -39,7 +39,7 @@ const menuItems = [
     description: "Grilled cottage cheese with Indian spices",
     category: "Main Course",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
     rating: 4.3,
   },
   {
@@ -49,19 +49,169 @@ const menuItems = [
     description: "Rich chocolate brownie with vanilla ice cream",
     category: "Desserts",
     isVeg: true,
-    image: "https://images.unsplash.com/photo-1564355808539-22fda35bed7e",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
     rating: 4.7,
   },
   {
     id: "5",
-    name: "Special Biniyani",
-    price: 210,
-    description: "Special Biniyani with special spices",
+    name: "Spicy Chicken Masala",
+    price: 279,
+    description: "Fiery chicken curry with traditional spices",
     category: "Must Try🔥",
-    isVeg: true,
+    isVeg: false,
     image:
-      "https://media.istockphoto.com/id/1410130688/photo/mutton-biryani-served-in-a-golden-dish-isolated-on-dark-background-side-view-indian-food.jpg?s=612x612&w=0&k=20&c=ueFrghYZuKAty-rFVe5dtMtNIbn0jaUsSvCUwTVOmd8=",
-    rating: 5,
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtnvAOajH9gS4C30cRF7rD_voaTAKly2Ntaw&s",
+    rating: 4.9,
+  },
+  {
+    id: "6",
+    name: "Vegetable Lasagna",
+    price: 229,
+    description: "Layered pasta with fresh vegetables and cheese",
+    category: "Main Course",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.4,
+  },
+  {
+    id: "7",
+    name: "BBQ Pulled Pork Sandwich",
+    price: 249,
+    description: "Slow-cooked pulled pork with tangy BBQ sauce",
+    category: "Burgers",
+    isVeg: false,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.7,
+  },
+  {
+    id: "8",
+    name: "Greek Salad",
+    price: 189,
+    description: "Fresh greens with feta, olives, and Mediterranean dressing",
+    category: "Main Course",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.3,
+  },
+  {
+    id: "9",
+    name: "Seafood Paella",
+    price: 299,
+    description: "Spanish rice dish with mixed seafood",
+    category: "Must Try🔥",
+    isVeg: false,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.8,
+  },
+  {
+    id: "10",
+    name: "Margherita Pizza",
+    price: 129,
+    description: "Classic pizza with fresh mozzarella and basil",
+    category: "Pizza",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.6,
+  },
+  {
+    id: "11",
+    name: "Vegan Buddha Bowl",
+    price: 219,
+    description: "Colorful bowl with roasted vegetables and quinoa",
+    category: "Main Course",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.5,
+  },
+  {
+    id: "12",
+    name: "Crispy Fish Tacos",
+    price: 259,
+    description: "Battered fish with fresh slaw and lime",
+    category: "Must Try🔥",
+    isVeg: false,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.7,
+  },
+  {
+    id: "13",
+    name: "Mushroom Risotto",
+    price: 239,
+    description: "Creamy rice with wild mushrooms and parmesan",
+    category: "Main Course",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.4,
+  },
+  {
+    id: "14",
+    name: "Korean BBQ Burger",
+    price: 269,
+    description: "Spicy Korean-style burger with kimchi",
+    category: "Burgers",
+    isVeg: false,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.6,
+  },
+  {
+    id: "15",
+    name: "Tiramisu",
+    price: 169,
+    description: "Classic Italian coffee-flavored dessert",
+    category: "Desserts",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.8,
+  },
+  {
+    id: "16",
+    name: "Vegetarian Pizza",
+    price: 189,
+    description: "Pizza topped with assorted fresh vegetables",
+    category: "Pizza",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.5,
+  },
+  {
+    id: "17",
+    name: "Grilled Salmon",
+    price: 289,
+    description: "Fresh salmon with herb butter sauce",
+    category: "Must Try🔥",
+    isVeg: false,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.9,
+  },
+  {
+    id: "18",
+    name: "Apple Pie",
+    price: 139,
+    description: "Homestyle apple pie with vanilla ice cream",
+    category: "Desserts",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.6,
+  },
+  {
+    id: "19",
+    name: "Vegetable Spring Rolls",
+    price: 179,
+    description: "Crispy rolls filled with mixed vegetables",
+    category: "Main Course",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.3,
+  },
+  {
+    id: "20",
+    name: "Chicken Quesadilla",
+    price: 209,
+    description: "Cheese and chicken-filled tortilla",
+    category: "Must Try🔥",
+    isVeg: false,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    rating: 4.7,
   },
 ];
 
@@ -218,139 +368,160 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-32 relative">
-      <RestaurantHeader />
-
-      {/* Search and Filters */}
-      <div className="px-3 sm:px-4 py-3 sm:py-6">
-        <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6">
-          <div className="relative rounded-lg shadow-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search menu..."
-              className="w-full pl-10 pr-4 py-2 sm:py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-
-          {/* Veg/Non-veg filter */}
-          <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 justify-center">
-            <button
-              onClick={() => setFilterVeg(true)}
-              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
-                filterVeg === true ? "text-orange-500 " : "border-gray-200"
-              }`}
-            >
-              Veg
-            </button>
-            <button
-              onClick={() => setFilterVeg(false)}
-              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
-                filterVeg === false ? "text-orange-500 " : "border-gray-200"
-              }`}
-            >
-              Non-veg
-            </button>
-            <button
-              onClick={() => setFilterVeg(null)}
-              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-white border-gray-200 flex-shrink-0 text-sm sm:text-base${
-                filterVeg !== false && filterVeg !== true
-                  ? "text-orange-500 -500"
-                  : "border-gray-200"
-              }`}
-            >
-              All
-            </button>
-            <button
-              onClick={() => setShowWaiterCall(true)}
-              className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-green-600 text-white border-gray-200 flex-shrink-0 text-sm sm:text-base"
-            >
-              Call Waiter
-            </button>
-          </div>
-        </div>
-
-        {/* Categories */}
-        <div className="flex-col gap-2 sm:gap-3 overflow-x-auto pb-4 mb-4 sm:mb-6 -mx-3 px-3 sm:mx-0 sm:px-0 ">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full whitespace-nowrap flex-shrink-0 text-sm sm:text-base ${
-                selectedCategory === category
-                  ? "bg-orange-500 text-white"
-                  : "bg-white border border-gray-200"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
-        {/* Menu Items Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-24">
-          <AnimatePresence>
-            {filteredItems.map((item) => {
-              const cartItem = cartItems.find(
-                (cartItem) => cartItem.id === item.id
-              );
-              const count = cartItem ? cartItem.quantity : 0;
-
-              return (
-                <MenuItem
-                  key={item.id}
-                  {...item}
-                  count={count}
-                  onIncrement={() => addToCart(item)}
-                  onDecrement={() => removeFromCart(item)}
-                />
-              );
-            })}
-          </AnimatePresence>
-        </div>
+    <div className="min-h-screen bg-gray-50 pb-32 ">
+      <div className="fixed w-full z-50 p-1 border-b text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
+        Created By&nbsp;
+        <a
+          href="https://ehike.in"
+          className="bg-clip-text text-transparent bg-gradient-to-br from-[#723FCD] to-[#DB9FF5] font-bold italic"
+        >
+          Ehike
+        </a>
       </div>
+      <div className="container mx-auto p-6">
+        <RestaurantHeader />
 
-      {/* Fixed Buttons */}
-      {cartItems.length > 0 && (
-        <div className="fixed bottom-10 sm:bottom-10 left-1/2 transform -translate-x-1/2 flex gap-4 z-40">
-          <button
-            onClick={() => setShowOrderForm(true)}
-            className="bg-orange-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:bg-orange-600 transition-colors text-sm sm:text-base"
-          >
-            Place Order
-          </button>
+        {/* Search and Filters */}
+        <div className="px-3 sm:px-4 py-3 sm:py-6">
+          <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <div className="relative rounded-lg shadow-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search menu..."
+                className="w-full pl-10 pr-4 py-2 sm:py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+
+            {/* Veg/Non-veg filter */}
+            <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 justify-center">
+              <button
+                onClick={() => setFilterVeg(true)}
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
+                  filterVeg === true ? "text-orange-500 " : "border-gray-200"
+                }`}
+              >
+                Veg
+              </button>
+              <button
+                onClick={() => setFilterVeg(false)}
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
+                  filterVeg === false ? "text-orange-500 " : "border-gray-200"
+                }`}
+              >
+                Non-veg
+              </button>
+              <button
+                onClick={() => setFilterVeg(null)}
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-white border-gray-200 flex-shrink-0 text-sm sm:text-base${
+                  filterVeg !== false && filterVeg !== true
+                    ? "text-orange-500 -500"
+                    : "border-gray-200"
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setShowWaiterCall(true)}
+                className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-green-600 text-white border-gray-200 flex-shrink-0 text-sm sm:text-base"
+              >
+                Call Waiter
+              </button>
+            </div>
+          </div>
+
+          {/* Categories */}
+          <div className="flex-col gap-2 sm:gap-3 overflow-x-auto pb-4 mb-4 sm:mb-6 -mx-3 px-3 sm:mx-0 sm:px-0 ">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full whitespace-nowrap flex-shrink-0 text-sm sm:text-base ${
+                  selectedCategory === category
+                    ? "bg-orange-500 text-white"
+                    : "bg-white border border-gray-200"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Menu Items Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-24">
+            <AnimatePresence>
+              {filteredItems.map((item) => {
+                const cartItem = cartItems.find(
+                  (cartItem) => cartItem.id === item.id
+                );
+                const count = cartItem ? cartItem.quantity : 0;
+
+                return (
+                  <MenuItem
+                    key={item.id}
+                    {...item}
+                    count={count}
+                    onIncrement={() => addToCart(item)}
+                    onDecrement={() => removeFromCart(item)}
+                  />
+                );
+              })}
+            </AnimatePresence>
+          </div>
         </div>
-      )}
 
-      {/* Modals */}
-      <OrderForm
-        isVisible={showOrderForm}
-        onClose={() => setShowOrderForm(false)}
-        onSubmit={handleOrderSubmit}
-        cartItems={cartItems}
-      />
+        {/* Fixed Buttons */}
+        {cartItems.length > 0 && (
+          <div className="fixed bottom-10 sm:bottom-10 left-1/2 transform -translate-x-1/2 flex gap-4 z-40">
+            <button
+              onClick={() => setShowOrderForm(true)}
+              className="bg-orange-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:bg-orange-600 transition-colors text-sm sm:text-base"
+            >
+              Place Order
+            </button>
+          </div>
+        )}
 
-      <WaiterCallForm
-        isVisible={showWaiterCall}
-        onClose={() => setShowWaiterCall(false)}
-      />
-
-      {showSuccess && successDetails && (
-        <SuccessCard
-          orderDetails={successDetails}
-          onClose={handleSuccessClose}
+        {/* Modals */}
+        <OrderForm
+          isVisible={showOrderForm}
+          onClose={() => setShowOrderForm(false)}
+          onSubmit={handleOrderSubmit}
+          cartItems={cartItems}
         />
-      )}
 
-      {/* Cart */}
-      <Cart
-        items={cartItems}
-        onIncrement={addToCart}
-        onDecrement={removeFromCart}
-      />
-      <div className="container"></div>
+        <WaiterCallForm
+          isVisible={showWaiterCall}
+          onClose={() => setShowWaiterCall(false)}
+        />
+
+        {showSuccess && successDetails && (
+          <SuccessCard
+            orderDetails={successDetails}
+            onClose={handleSuccessClose}
+          />
+        )}
+
+        {/* Cart */}
+        <Cart
+          items={cartItems}
+          onIncrement={addToCart}
+          onDecrement={removeFromCart}
+        />
+
+        <div className="container"></div>
+      </div>
+      <div className=" p-1 border-t text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
+        Created By&nbsp;
+        <a
+          href="https://ehike.in"
+          className="bg-clip-text text-transparent bg-gradient-to-br from-[#723FCD] to-[#DB9FF5] font-bold italic"
+        >
+          Ehike
+        </a>
+      </div>
     </div>
   );
 }
