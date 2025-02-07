@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const MenuItem = ({
+  id,
   name,
   description,
   price,
-  imageUrl,
+  image,
   rating,
+  isVeg,
   count,
   onIncrement,
   onDecrement,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
-  const modalRef = useRef(null);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -25,67 +27,62 @@ const MenuItem = ({
     }
   }, [isModalOpen]);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
-  const handleOutsideClick = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
-      toggleModal();
-    }
-  };
-
   return (
-    <>
-      {/* Regular Card View */}
-      <div className="flex justify-between items-start p-4 bg-white rounded-lg my-2 shadow-md">
-        <div className="w-2/3">
-          <div className="flex items-center mb-2">
-            <h3 className="text-lg font-semibold">{name}</h3>
-          </div>
-          <p className="text-gray-600 mb-2">₹{price}</p>
-          <div className="flex items-center mb-2">
-            <span className="text-green-600 text-sm font-medium mr-1">
-              {rating}
-            </span>
-            <span className="text-sm text-green-800 font-semibold">
-              {typeof rating === "number" ? `⭐` : `pc`}
-            </span>
-          </div>
-          <p className="text-sm text-gray-500">
-            {description.length > 60
-              ? `${description.substring(0, 50)} ...more`
-              : description}
-          </p>
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow w-full"
+    >
+      <div className="relative h-40 sm:h-48">
+        <img src={image} alt={name} className="w-full h-full object-cover" />
+        <div
+          className={`absolute top-2 right-2 ${
+            isVeg ? "bg-green-500" : "bg-red-500"
+          } text-white px-2 py-1 rounded-full text-xs`}
+        >
+          {isVeg ? "Veg" : "Non-veg"}
         </div>
-
-        <div className="flex flex-col items-center">
-          <img
-            src={imageUrl}
-            alt={name}
-            className="w-24 h-24 object-cover rounded-lg mb-2 cursor-pointer hover:opacity-90 transition-opacity"
-            onClick={toggleModal}
-          />
+      </div>
+      <div className="p-3 sm:p-4">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800 line-clamp-1">
+            {name}
+          </h3>
+          <div className="flex items-center bg-orange-100 px-2 py-1 rounded ml-2 flex-shrink-0">
+            <span className="text-orange-500">★</span>
+            <span className="ml-1 text-sm">{rating}</span>
+          </div>
+        </div>
+        <p className="text-gray-600 text-xs sm:text-sm mb-3 line-clamp-2">
+          {description}
+        </p>
+        <div className="flex justify-between items-center">
+          <span className="text-base sm:text-lg font-bold text-gray-800">
+            ₹{price}
+          </span>
           <div className="flex items-center space-x-2">
-            {count === 0 && (
-              <button onClick={onIncrement}>
-                <span className="button_top">
-                  {count > 0 ? `(${count})` : "Add"}
-                </span>
+            {count === 0 ? (
+              <button
+                onClick={onIncrement}
+                className="bg-green-500 text-white px-3 sm:px-4 py-1 rounded-full hover:bg-green-600 transition-colors text-sm sm:text-base"
+              >
+                Add
               </button>
-            )}
-            {count > 0 && (
+            ) : (
               <div className="flex items-center space-x-2">
                 <button
                   onClick={onDecrement}
-                  className="text-red-600 bg-red-100 px-2 py-1 rounded"
+                  className="text-red-600 bg-red-100 w-8 h-8 rounded-full flex items-center justify-center"
                 >
                   -
                 </button>
-                <span>{count}</span>
+                <span className="w-4 text-center">{count}</span>
                 <button
                   onClick={onIncrement}
-                  className="text-green-600 bg-green-100 px-2 py-1 rounded"
+                  className="text-green-600 bg-green-100 w-8 h-8 rounded-full flex items-center justify-center"
                 >
                   +
                 </button>
@@ -94,94 +91,7 @@ const MenuItem = ({
           </div>
         </div>
       </div>
-
-      {/* Modal View */}
-      {shouldRender && (
-        <div
-          className={`fixed inset-0 bg-black transition-opacity duration-300 ease-in-out flex items-center justify-center z-50
-            ${
-              isModalOpen
-                ? "bg-opacity-50 opacity-100"
-                : "bg-opacity-0 opacity-0"
-            }`}
-          onClick={handleOutsideClick}
-        >
-          <div
-            ref={modalRef}
-            className={`z-50 bg-white rounded-lg max-w-2xl w-full mx-4 relative transform transition-all duration-300 ease-in-out
-              ${isModalOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
-          >
-            <div className="p-6">
-              {/* <button
-                onClick={toggleModal}
-                className="absolute right-4 top-4 text-black hover:opacity-80 transition-opacity"
-              >
-                <X size={24} />
-              </button> */}
-              <div className="gap-6 mb-4">
-                <img
-                  src={imageUrl}
-                  alt={name}
-                  className="w-full h-48 object-fill rounded-md border-b border-gray-200 pb-2"
-                />
-                <div>
-                  <h3 className="text-xl font-semibold mb-2 mt-1npm urn dev">
-                    {name}
-                  </h3>
-                  <p className="text-gray-600 text-lg mb-2">₹{price}</p>
-                  <div className="flex items-center mb-2">
-                    <span className="text-green-600 text-sm font-medium mr-1">
-                      {rating}
-                    </span>
-                    <span className="text-sm text-green-800 font-semibold">
-                      {typeof rating === "number" ? `⭐` : `pc`}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <h4 className="font-semibold mb-2">Description</h4>
-                <p className="text-gray-600">{description}</p>
-              </div>
-
-              {/* Stats Section */}
-              <div className="text-center border-t pt-4 flex justify-between px-8">
-                <button onClick={toggleModal}>
-                  <span className="button_top">Close</span>
-                </button>
-                <div className="flex items-center space-x-2">
-                  {count === 0 && (
-                    <button onClick={onIncrement}>
-                      <span className="button_top">
-                        {count > 0 ? `(${count})` : "Add"}
-                      </span>
-                    </button>
-                  )}
-                  {count > 0 && (
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={onDecrement}
-                        className="text-red-600 bg-red-100 px-2 py-1 rounded"
-                      >
-                        -
-                      </button>
-                      <span>{count}</span>
-                      <button
-                        onClick={onIncrement}
-                        className="text-green-600 bg-green-100 px-2 py-1 rounded"
-                      >
-                        +
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    </motion.div>
   );
 };
 

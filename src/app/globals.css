@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 .container {
     width: 100%;
     height: 100%;

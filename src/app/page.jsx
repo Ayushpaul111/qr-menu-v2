@@ -1,67 +1,136 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Search } from "lucide-react";
+import { AnimatePresence } from "framer-motion";
 import RestaurantHeader from "../Components/RestaurantHeader";
-import MenuCategory from "../Components/MenuCategory";
 import MenuItem from "../Components/MenuItem";
-import CategoryMenu from "../Components/CategoryMenu";
+import WaiterCallForm from "../components/WaiterCallForm";
 import Cart from "../Components/Cart";
 import confetti from "canvas-confetti";
 import SuccessCard from "@/Components/SuccessCard";
 import OrderForm from "@/Components/OrderForm";
-import WaiterCallForm from "@/Components/WaiterCallForm";
 import toast from "react-hot-toast";
 
+const menuItems = [
+  {
+    id: "1",
+    name: "Garden Fresh Pizza",
+    price: 100,
+    description: "Loaded with fresh vegetables and herbs",
+    category: "Pizza",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591",
+    rating: 4.5,
+  },
+  {
+    id: "2",
+    name: "Classic Chicken Burger",
+    price: 199,
+    description: "Juicy chicken patty with fresh lettuce",
+    category: "Burgers",
+    isVeg: false,
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+    rating: 4.8,
+  },
+  {
+    id: "3",
+    name: "Paneer Tikka",
+    price: 249,
+    description: "Grilled cottage cheese with Indian spices",
+    category: "Main Course",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8",
+    rating: 4.3,
+  },
+  {
+    id: "4",
+    name: "Chocolate Brownie",
+    price: 149,
+    description: "Rich chocolate brownie with vanilla ice cream",
+    category: "Desserts",
+    isVeg: true,
+    image: "https://images.unsplash.com/photo-1564355808539-22fda35bed7e",
+    rating: 4.7,
+  },
+];
+
+const categories = ["All", "Pizza", "Burgers", "Main Course", "Desserts"];
+
 export default function Home() {
-  const [cartItems, setCartItems] = useState([]);
-  const [itemCounts, setItemCounts] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [filterVeg, setFilterVeg] = useState(null);
+  const [filteredItems, setFilteredItems] = useState(menuItems);
   const [showOrderForm, setShowOrderForm] = useState(false);
+  const [showWaiterCall, setShowWaiterCall] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [successDetails, setSuccessDetails] = useState(null);
-  const [showWaiterCall, setShowWaiterCall] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [itemCounts, setItemCounts] = useState({});
 
-  const categories = [
-    { id: "Must Try", name: "Must Try 🔥" },
-    { id: "Steamed Items", name: "Steamed Items" },
-    { id: "Burgers", name: "Burgers" },
-    { id: "cart", name: "Total Bill" },
-  ];
+  useEffect(() => {
+    let filtered = menuItems;
 
-  const handleIncrementItem = (item) => {
-    setCartItems((prevItems) => [...prevItems, item]);
-    setItemCounts((prevCounts) => ({
-      ...prevCounts,
-      [item.name]: (prevCounts[item.name] || 0) + 1,
-    }));
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (item) =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (selectedCategory !== "All") {
+      filtered = filtered.filter((item) => item.category === selectedCategory);
+    }
+
+    if (filterVeg !== null) {
+      filtered = filtered.filter((item) => item.isVeg === filterVeg);
+    }
+
+    setFilteredItems(filtered);
+  }, [searchTerm, selectedCategory, filterVeg]);
+
+  const addToCart = (item) => {
+    const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
+
+    if (existingItem) {
+      setCartItems((prevItems) =>
+        prevItems.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        )
+      );
+    } else {
+      setCartItems((prevItems) => [...prevItems, { ...item, quantity: 1 }]);
+    }
+
+    // You can remove the setItemCounts call as we're now using the quantity property
     toast.success(`${item.name} added to cart`);
   };
 
-  const handleDecrementItem = (item) => {
-    // Find the index of the first occurrence of the item to remove
-    const indexToRemove = cartItems.findIndex(
-      (cartItem) => cartItem.name === item.name
-    );
+  const removeFromCart = (item) => {
+    const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
 
-    if (indexToRemove !== -1) {
-      const newCartItems = cartItems.filter((_, i) => i !== indexToRemove);
-      setCartItems(newCartItems);
+    if (existingItem) {
+      if (existingItem.quantity === 1) {
+        setCartItems((prevItems) =>
+          prevItems.filter((cartItem) => cartItem.id !== item.id)
+        );
+      } else {
+        setCartItems((prevItems) =>
+          prevItems.map((cartItem) =>
+            cartItem.id === item.id
+              ? { ...cartItem, quantity: cartItem.quantity - 1 }
+              : cartItem
+          )
+        );
+      }
 
-      setItemCounts((prevCounts) => ({
-        ...prevCounts,
-        [item.name]: Math.max((prevCounts[item.name] || 0) - 1, 0),
-      }));
-
+      // You can remove the setItemCounts call as we're now using the quantity property
       toast(`${item.name} removed`, { icon: "🗑️" });
     }
   };
-
-  const item = (name, price) => ({
-    name,
-    price,
-    onAdd: () => handleAddToCart({ name, price }),
-    onIncrement: () => handleIncrementItem({ name, price }),
-    onDecrement: () => handleDecrementItem({ name, price }),
-    count: itemCounts[name] || 0,
-  });
 
   const fireConfetti = () => {
     confetti({
@@ -131,135 +200,138 @@ export default function Home() {
   };
 
   return (
-    <div className="main-container relative">
-      <div className="fixed w-full z-50 p-1 border-b text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
-        Created By&nbsp;
-        <a
-          href="https://ehike.in"
-          className="bg-clip-text text-transparent bg-gradient-to-br from-[#723FCD] to-[#DB9FF5] font-bold italic"
-        >
-          Ehike
-        </a>
-      </div>
-      <div className="container mx-auto p-6">
-        <RestaurantHeader />
+    <div className="min-h-screen bg-gray-50 pb-32 relative">
+      <RestaurantHeader />
 
-        {/* Category Menu */}
-        <CategoryMenu categories={categories} />
+      {/* Search and Filters */}
+      <div className="px-3 sm:px-4 py-3 sm:py-6">
+        <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search menu..."
+              className="w-full pl-10 pr-4 py-2 sm:py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
 
-        {/* Menu Items */}
-
-        <MenuCategory id="Must Try" category="Must Try 🔥">
-          <MenuItem
-            {...item("Steamed chicken with toast", 90)}
-            description="Toast served with steamed chicken."
-            // price={90}
-            imageUrl="https://www.onehappyhousewife.com/wp-content/uploads/2017/09/canned-chicken-ala-king-recipe-900x1200.jpg"
-            rating={4.5}
-          />
-        </MenuCategory>
-        <MenuCategory id="Steamed Items" category="Steamed Items">
-          <MenuItem
-            {...item("Veg Momo", 60)}
-            description="Soft dumplings filled with cheese and veggies."
-            imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcn5UVtu96GXeI2ffuiSHLHMdiqUjjH46ddg&s"
-            rating={"8"}
-            // reviews={10}
-          />
-          <MenuItem
-            {...item("Chicken Momo", 60)}
-            description="Steamed chicken-filled dumplings."
-            imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvWweMLsRjFVayNya0dO9ue0xrZOGmgeWgBg&s"
-            rating={"8"}
-            // reviews={10}
-          />
-        </MenuCategory>
-        <MenuCategory id="Burgers" category="Burgers">
-          <MenuItem
-            {...item("Crispy Burger", 50)}
-            description="Crispy Burger"
-            imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPHnSzwK4Hlo5taS9JO36XX03MRdcNEu0yw&s"
-            rating={4.5}
-            // reviews={10}
-          />
-        </MenuCategory>
-
-        <WaiterCallForm
-          isVisible={showWaiterCall}
-          onClose={() => setShowWaiterCall(false)}
-        />
-        <div className="pb-10">
-          {cartItems.length !== 0 && (
-            <>
-              <button
-                onClick={() => {
-                  setShowOrderForm(true);
-                  // const cartElement = document.getElementById("cart");
-                  // if (cartElement) {
-                  //   cartElement.scrollIntoView({
-                  //     behavior: "smooth",
-                  //     block: "start",
-                  //   });
-                  // }
-                  // fireConfetti();
-                }}
-                className="fire-btn fixed z-40 bottom-8 left-[35%] text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
-              >
-                Order
-              </button>
-              <button
-                onClick={() => {
-                  // setShowOrderForm(true);
-                  const cartElement = document.getElementById("cart");
-                  if (cartElement) {
-                    cartElement.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    });
-                  }
-                  // fireConfetti();
-                }}
-                className="fire-btn fixed z-40 bottom-8 left-8 text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
-              >
-                Cart
-              </button>
-            </>
-          )}
+          {/* Veg/Non-veg filter */}
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 ">
+            <button
+              onClick={() => setFilterVeg(true)}
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
+                filterVeg === true ? "text-orange-500 " : "border-gray-200"
+              }`}
+            >
+              Veg
+            </button>
+            <button
+              onClick={() => setFilterVeg(false)}
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
+                filterVeg === false ? "text-orange-500 " : "border-gray-200"
+              }`}
+            >
+              Non-veg
+            </button>
+            <button
+              onClick={() => setFilterVeg(null)}
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-white border-gray-200 flex-shrink-0 text-sm sm:text-base${
+                filterVeg !== false && filterVeg !== true
+                  ? "text-orange-500 -500"
+                  : "border-gray-200"
+              }`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setShowWaiterCall(true)}
+              className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-green-600 text-white border-gray-200 flex-shrink-0 text-sm sm:text-base"
+            >
+              Call Waiter
+            </button>
+          </div>
         </div>
-        <OrderForm
-          cartItems={cartItems}
-          onSubmit={handleOrderSubmit}
-          onCancel={() => setShowOrderForm(false)}
-          isVisible={showOrderForm}
-        />
-        {showSuccess && successDetails && (
-          <SuccessCard
-            orderDetails={successDetails}
-            onClose={handleSuccessClose}
-          />
-        )}
-        <Cart
-          id="cart"
-          cartItems={cartItems}
-          onIncrement={handleIncrementItem}
-          onDecrement={handleDecrementItem}
-        />
-        <button
-          onClick={() => setShowWaiterCall(true)}
-          className="fire-btn fixed z-40 bottom-24 right-8 text-white p-4 text-sm rounded-full shadow-lg transition-transform duration-300"
-        >
-          Call Waiter
-        </button>
+
+        {/* Categories */}
+        <div className="flex-col gap-2 sm:gap-3 overflow-x-auto pb-4 mb-4 sm:mb-6 -mx-3 px-3 sm:mx-0 sm:px-0 ">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full whitespace-nowrap flex-shrink-0 text-sm sm:text-base ${
+                selectedCategory === category
+                  ? "bg-orange-500 text-white"
+                  : "bg-white border border-gray-200"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Menu Items Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-24">
+          <AnimatePresence>
+            {filteredItems.map((item) => {
+              const cartItem = cartItems.find(
+                (cartItem) => cartItem.id === item.id
+              );
+              const count = cartItem ? cartItem.quantity : 0;
+
+              return (
+                <MenuItem
+                  key={item.id}
+                  {...item}
+                  count={count}
+                  onIncrement={() => addToCart(item)}
+                  onDecrement={() => removeFromCart(item)}
+                />
+              );
+            })}
+          </AnimatePresence>
+        </div>
       </div>
-      <div className="fixed bottom-0 w-full p-1 border-t text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
-        Created By&nbsp;
-        <a
-          href="https://ehike.in"
-          className="bg-clip-text text-transparent bg-gradient-to-br from-[#723FCD] to-[#DB9FF5] font-bold italic"
-        >
-          Ehike
-        </a>
-      </div>
+
+      {/* Fixed Buttons */}
+      {cartItems.length > 0 && (
+        <div className="fixed bottom-20 sm:bottom-10 left-1/2 transform -translate-x-1/2 flex gap-4 z-40">
+          <button
+            onClick={() => setShowOrderForm(true)}
+            className="bg-orange-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:bg-orange-600 transition-colors text-sm sm:text-base"
+          >
+            Place Order
+          </button>
+        </div>
+      )}
+
+      {/* Modals */}
+      <OrderForm
+        isVisible={showOrderForm}
+        onClose={() => setShowOrderForm(false)}
+        onSubmit={handleOrderSubmit}
+        cartItems={cartItems}
+      />
+
+      <WaiterCallForm
+        isVisible={showWaiterCall}
+        onClose={() => setShowWaiterCall(false)}
+      />
+
+      {showSuccess && successDetails && (
+        <SuccessCard
+          orderDetails={successDetails}
+          onClose={handleSuccessClose}
+        />
+      )}
+
+      {/* Cart */}
+      <Cart
+        items={cartItems}
+        onIncrement={addToCart}
+        onDecrement={removeFromCart}
+      />
       <div className="container"></div>
     </div>
   );

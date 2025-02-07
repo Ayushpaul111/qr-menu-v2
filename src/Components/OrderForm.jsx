@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
+const OrderForm = ({ cartItems, onSubmit, isVisible, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -8,13 +8,27 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
     tableNumber: "",
   });
 
+  const calculateTotal = (items) => {
+    return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Create detailed items array with quantities
+    const itemsWithDetails = cartItems.map((item) => ({
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      totalPrice: item.price * item.quantity,
+    }));
+
     const orderDetails = {
       customerInfo: formData,
-      items: cartItems,
-      total: cartItems.reduce((sum, item) => sum + item.price, 0),
+      items: itemsWithDetails,
+      total: calculateTotal(cartItems),
+      orderDate: new Date().toISOString(),
     };
 
     try {
@@ -52,7 +66,6 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
             <input
               type="tel"
               required
-              // pattern="[0-9]{10}"
               className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
               value={formData.phone}
               onChange={(e) =>
@@ -84,18 +97,18 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
           <div className="mt-4">
             <h3 className="font-medium mb-2">Order Summary</h3>
             <div className="space-y-2">
-              {cartItems.map((item, index) => (
-                <div key={index} className="flex justify-between text-sm">
-                  <span>{item.name}</span>
-                  <span>₹{item.price}</span>
+              {cartItems.map((item) => (
+                <div key={item.id} className="flex justify-between text-sm">
+                  <span>
+                    {item.name} x {item.quantity}
+                  </span>
+                  <span>₹{item.price * item.quantity}</span>
                 </div>
               ))}
               <div className="border-t pt-2 font-bold">
                 <div className="flex justify-between">
                   <span>Total</span>
-                  <span>
-                    ₹{cartItems.reduce((sum, item) => sum + item.price, 0)}
-                  </span>
+                  <span>₹{calculateTotal(cartItems)}</span>
                 </div>
               </div>
             </div>
@@ -104,9 +117,9 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
           <div className="flex gap-2 mt-6">
             <button
               type="button"
-              onClick={onCancel}
+              onClick={onClose}
               disabled={isSubmitting}
-              className="flex-1 px-4 py-2 border border-gray-300 text-white rounded-md text-sm disabled:opacity-50"
+              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md text-sm disabled:opacity-50"
             >
               Cancel
             </button>
@@ -149,4 +162,5 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onCancel }) => {
     </div>
   );
 };
+
 export default OrderForm;
