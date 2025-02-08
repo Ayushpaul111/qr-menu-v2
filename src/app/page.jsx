@@ -7,8 +7,8 @@ import MenuItem from "../Components/MenuItem";
 import WaiterCallForm from "../Components/WaiterCallForm";
 import Cart from "../Components/Cart";
 import confetti from "canvas-confetti";
-import SuccessCard from "@/Components/SuccessCard";
-import OrderForm from "@/Components/OrderForm";
+import SuccessCard from "../Components/SuccessCard";
+import OrderForm from "../Components/OrderForm";
 import toast from "react-hot-toast";
 
 const menuItems = [

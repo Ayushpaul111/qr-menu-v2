@@ -58,10 +58,10 @@ export async function POST(req) {
 
     const sheets = await getGoogleSheetsClient();
 
-    // Format the order items into a detailed string with quantities and prices
+    // Format the order items with each item on a new line
     const itemsList = items
-      .map((item) => `${item.name} x${item.quantity} (₹${item.totalPrice})`)
-      .join(", ");
+      .map((item) => `• ${item.name} x${item.quantity} (₹${item.totalPrice})`)
+      .join("\n");
 
     // Format the current date and time
     const orderDate = new Date().toLocaleString("en-IN", {
