@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const MenuItem = React.memo(
   ({
@@ -16,16 +16,19 @@ const MenuItem = React.memo(
   }) => {
     return (
       <motion.div
-        layout
-        style={{ willChange: "opacity, transform" }}
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 10 }}
+        exit={{ opacity: 0 }}
         transition={{
-          type: "linear",
-          duration: 0.15,
+          duration: 0.2,
+          ease: "easeOut",
         }}
         className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow w-full"
+        // Remove layout animation as it's causing performance issues
+        style={{
+          willChange: "transform",
+          transform: "translateZ(0)", // Force GPU acceleration
+        }}
       >
         <div className="relative h-40 sm:h-48">
           <img
@@ -34,6 +37,9 @@ const MenuItem = React.memo(
             className="w-full h-full object-cover"
             loading="lazy"
             decoding="async"
+            style={{
+              backfaceVisibility: "hidden", // Prevent paint during animations
+            }}
           />
           <div
             className={`absolute top-2 right-2 ${
@@ -53,7 +59,7 @@ const MenuItem = React.memo(
                   width="90"
                   height="90"
                   stroke="green"
-                  stroke-width="6"
+                  strokeWidth="6"
                   fill="none"
                 />
                 <circle cx="50" cy="50" r="25" fill="green" />
@@ -71,7 +77,7 @@ const MenuItem = React.memo(
                   width="90"
                   height="90"
                   stroke="red"
-                  stroke-width="6"
+                  strokeWidth="6"
                   fill="none"
                 />
                 <polygon points="50,25 20,75 80,75" fill="red" />
@@ -125,6 +131,14 @@ const MenuItem = React.memo(
           </div>
         </div>
       </motion.div>
+    );
+  },
+  // Implement a proper comparison function for React.memo
+  (prevProps, nextProps) => {
+    return (
+      prevProps.count === nextProps.count &&
+      prevProps.price === nextProps.price &&
+      prevProps.name === nextProps.name
     );
   }
 );
