@@ -126,7 +126,7 @@ const OrderForm = ({ cartItems, onSubmit, isVisible, onClose }) => {
                   whileTap={{ scale: 0.95 }}
                   onClick={onClose}
                   disabled={isSubmitting}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50"
+                  className="flex-1 px-4 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
                 >
                   Cancel
                 </motion.button>

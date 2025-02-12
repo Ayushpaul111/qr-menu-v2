@@ -10,6 +10,7 @@ import confetti from "canvas-confetti";
 import SuccessCard from "../Components/SuccessCard";
 import OrderForm from "../Components/OrderForm";
 import toast from "react-hot-toast";
+import BrandingBar from "../Components/BrandingBar";
 
 const menuItems = [
   {
@@ -367,17 +368,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-32 ">
-      <div className="fixed w-full z-50 p-1 border-b text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
-        Created By&nbsp;
-        <a
-          href="https://ehike.in"
-          className="bg-clip-text text-transparent bg-gradient-to-br from-[#723FCD] to-[#DB9FF5] font-bold italic"
-        >
-          Ehike
-        </a>
-      </div>
-      <div className="container mx-auto p-6">
+    <div className=" flex flex-col min-h-screen bg-gray-50 ">
+      <BrandingBar position="top" />
+      <div className="flex-1 container mx-auto p-6">
         <RestaurantHeader />
 
         {/* Search and Filters */}
@@ -512,15 +505,7 @@ export default function Home() {
 
         <div className="container"></div>
       </div>
-      <div className=" p-1 border-t text-xs flex items-center justify-center bg-gradient-to-tr from-[#f9f6fe] to-[#ffffff]">
-        Created By&nbsp;
-        <a
-          href="https://ehike.in"
-          className="bg-clip-text text-transparent bg-gradient-to-br from-[#723FCD] to-[#DB9FF5] font-bold italic"
-        >
-          Ehike
-        </a>
-      </div>
+      <BrandingBar position="bottom" />
     </div>
   );
 }
