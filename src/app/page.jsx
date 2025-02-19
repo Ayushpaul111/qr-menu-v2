@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
-import { AnimatePresence } from "framer-motion";
 import RestaurantHeader from "../Components/RestaurantHeader";
 import MenuItem from "../Components/MenuItem";
 import WaiterCallForm from "../Components/WaiterCallForm";
@@ -11,6 +10,7 @@ import SuccessCard from "../Components/SuccessCard";
 import OrderForm from "../Components/OrderForm";
 import toast from "react-hot-toast";
 import BrandingBar from "../Components/BrandingBar";
+import Categories from "../Components/Categories";
 
 const menuItems = [
   {
@@ -391,26 +391,30 @@ export default function Home() {
             <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 justify-center">
               <button
                 onClick={() => setFilterVeg(true)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
-                  filterVeg === true ? "text-orange-500 " : "border-gray-200"
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border flex-shrink-0 text-sm sm:text-base ${
+                  filterVeg === true
+                    ? "bg-orange-500 text-white shadow-lg shadow-orange-500/30 transform -translate-y-0.5"
+                    : "bg-white text-gray-600 hover:bg-orange-50"
                 }`}
               >
                 Veg
               </button>
               <button
                 onClick={() => setFilterVeg(false)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white border flex-shrink-0 text-sm sm:text-base ${
-                  filterVeg === false ? "text-orange-500 " : "border-gray-200"
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border flex-shrink-0 text-sm sm:text-base ${
+                  filterVeg === false
+                    ? "bg-orange-500 text-white shadow-lg shadow-orange-500/30 transform -translate-y-0.5"
+                    : "bg-white text-gray-600 hover:bg-orange-50"
                 }`}
               >
                 Non-veg
               </button>
               <button
                 onClick={() => setFilterVeg(null)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-white border-gray-200 flex-shrink-0 text-sm sm:text-base${
-                  filterVeg !== false && filterVeg !== true
-                    ? "text-orange-500 -500"
-                    : "border-gray-200"
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-orange-500 flex-shrink-0 text-sm sm:text-base ${
+                  filterVeg === null
+                    ? "text-white border-orange-500"
+                    : "bg-white text-gray-600 hover:bg-orange-50 border-gray-200"
                 }`}
               >
                 All
@@ -425,21 +429,11 @@ export default function Home() {
           </div>
 
           {/* Categories */}
-          <div className="flex-col gap-2 sm:gap-3 overflow-x-auto pb-4 mb-4 sm:mb-6 -mx-3 px-3 sm:mx-0 sm:px-0 ">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full whitespace-nowrap flex-shrink-0 text-sm sm:text-base ${
-                  selectedCategory === category
-                    ? "bg-orange-500 text-white"
-                    : "bg-white border border-gray-200"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <Categories
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
 
           {/* Menu Items Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-24">
