@@ -1,44 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ShoppingBag, ChevronDown, ChevronUp, Plus, Minus } from "lucide-react";
 
 export default function Cart({ items = [], onIncrement, onDecrement }) {
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const cartRef = useRef(null);
 
-  // Calculate total price
-  const totalPrice = items.reduce(
+  // Calculate totals
+  const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-
-  // Create unique cart items
-  const cartItems = items.reduce((acc, item) => {
-    if (!acc[item.id]) {
-      acc[item.id] = {
-        ...item,
-        quantity: item.quantity,
-      };
-    }
-    return acc;
-  }, {});
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   // Handle clicks outside the cart
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (cartRef.current && !cartRef.current.contains(event.target)) {
-        setIsMinimized(true);
+        setIsExpanded(false);
       }
     };
 
-    // Add event listener to document
-    document.addEventListener("touchstart", handleClickOutside);
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
 
-    // Cleanup listener
     return () => {
-      document.removeEventListener("touchstart", handleClickOutside);
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, []);
 
@@ -46,81 +34,103 @@ export default function Cart({ items = [], onIncrement, onDecrement }) {
 
   return (
     <motion.div
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 100, opacity: 0 }}
+      className="fixed bottom-24 left-0 right-0 mx-auto w-full max-w-md px-4"
       ref={cartRef}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-30"
     >
-      <div className="relative">
-        <button
-          onClick={() => setIsMinimized(!isMinimized)}
-          className="absolute -top-8 right-4 bg-orange-500 text-white p-2 rounded-t-lg"
+      <div className="bg-white rounded-2xl shadow-xl border border-gray-100">
+        {/* Cart Header */}
+        <div
+          className="p-4 flex items-center justify-between cursor-pointer"
+          onClick={() => setIsExpanded(!isExpanded)}
         >
-          {isMinimized ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-      </div>
+          <div className="flex items-center gap-3">
+            <ShoppingBag className="w-5 h-5 text-orange-500" />
+            <h3 className="text-lg font-semibold text-gray-900">Your Cart</h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">{totalItems} items</span>
+            <span className="font-semibold text-gray-900">₹{total}</span>
+            {isExpanded ? (
+              <ChevronDown className="w-5 h-5 text-gray-500" />
+            ) : (
+              <ChevronUp className="w-5 h-5 text-gray-500" />
+            )}
+          </div>
+        </div>
 
-      <AnimatePresence>
-        {!isMinimized && (
-          <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: "auto" }}
-            exit={{ height: 0 }}
-            className="overflow-hidden"
-          >
-            <div className="p-4 bg-white transition-all duration-300 mb-12">
-              <h2 className="text-lg font-semibold mb-4">Cart Items</h2>
-              <div>
-                <ul className="space-y-2">
-                  {Object.values(cartItems).map((item) => (
-                    <li
-                      key={item.id}
-                      className="flex justify-between items-center py-2"
-                    >
-                      <div className="flex-1">
-                        <span className="font-medium">{item.name}</span>
-                        <div className="text-sm text-gray-600">
-                          x{item.quantity} = ₹{item.price * item.quantity}
-                        </div>
+        {/* Cart Items */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="px-4 pb-4 space-y-3">
+                {items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-3">
+                      {item.image && (
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-12 h-12 rounded-lg object-cover"
+                        />
+                      )}
+                      <div>
+                        <h4 className="font-medium text-gray-900">
+                          {item.name}
+                        </h4>
+                        <p className="text-sm text-gray-500">₹{item.price}</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() => onDecrement(item)}
-                          className="text-red-600 bg-red-100 w-8 h-8 rounded-full flex items-center justify-center"
-                        >
-                          -
-                        </button>
-                        <p>{item.quantity}</p>
-                        <button
-                          onClick={() => onIncrement(item)}
-                          className="text-green-600 bg-green-100 w-8 h-8 rounded-full flex items-center justify-center"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDecrement(item);
+                        }}
+                        className="p-1 rounded-full bg-orange-100 text-orange-500 hover:bg-orange-200 transition-colors"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <span className="font-medium text-gray-700 min-w-[20px] text-center">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onIncrement(item);
+                        }}
+                        className="p-1 rounded-full bg-orange-100 text-orange-500 hover:bg-orange-200 transition-colors"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <div className="flex justify-between items-center">
-                    <strong>Total:</strong>
-                    <span className="text-lg font-semibold">₹{totalPrice}</span>
+                    <strong className="text-gray-900">Total Amount</strong>
+                    <span className="text-lg font-semibold text-gray-900">
+                      ₹{total}
+                    </span>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {isMinimized && (
-        <div className="p-4 bg-white border-t border-gray-200">
-          <div className="flex justify-between items-center">
-            <span className="font-medium">Total Amount:</span>
-            <span className="text-lg font-semibold">₹{totalPrice}</span>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 }
