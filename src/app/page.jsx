@@ -425,7 +425,7 @@ export default function Home() {
           </div>
 
           {/* Categories */}
-          <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-4 mb-4 sm:mb-6 -mx-3 px-3 sm:mx-0 sm:px-0">
+          <div className="flex-col gap-2 sm:gap-3 overflow-x-auto pb-4 mb-4 sm:mb-6 -mx-3 px-3 sm:mx-0 sm:px-0 ">
             {categories.map((category) => (
               <button
                 key={category}
@@ -443,7 +443,6 @@ export default function Home() {
 
           {/* Menu Items Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-24">
-            {/* <AnimatePresence> */}
             {filteredItems.map((item) => {
               const cartItem = cartItems.find(
                 (cartItem) => cartItem.id === item.id
@@ -460,7 +459,6 @@ export default function Home() {
                 />
               );
             })}
-            {/* </AnimatePresence> */}
           </div>
         </div>
 
