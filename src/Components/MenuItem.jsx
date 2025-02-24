@@ -1,7 +1,10 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+"use client";
 
-const MenuItem = React.memo(
+import { memo } from "react";
+import { motion } from "framer-motion";
+// import ImageWithFallback from "./ImageWithFallback";
+
+const MenuItem = memo(
   ({
     id,
     name,
@@ -19,28 +22,15 @@ const MenuItem = React.memo(
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
-        transition={{
-          duration: 0.2,
-          ease: "easeOut",
-        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
         className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow w-full"
-        // Remove layout animation as it's causing performance issues
         style={{
           willChange: "transform",
           transform: "translateZ(0)", // Force GPU acceleration
         }}
       >
         <div className="relative h-40 sm:h-48">
-          <img
-            src={image}
-            alt={name}
-            className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
-            style={{
-              backfaceVisibility: "hidden", // Prevent paint during animations
-            }}
-          />
+          <img src={image} alt={name} className="w-full h-full object-cover" />
           <div
             className={`absolute top-2 right-2 ${
               isVeg ? "bg-white" : "bg-white"
@@ -131,14 +121,6 @@ const MenuItem = React.memo(
           </div>
         </div>
       </motion.div>
-    );
-  },
-  // Implement a proper comparison function for React.memo
-  (prevProps, nextProps) => {
-    return (
-      prevProps.count === nextProps.count &&
-      prevProps.price === nextProps.price &&
-      prevProps.name === nextProps.name
     );
   }
 );
