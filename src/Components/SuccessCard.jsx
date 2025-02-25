@@ -1,6 +1,6 @@
-import { X } from "lucide-react";
+// import { X } from "lucide-react";
 import { motion } from "framer-motion";
-import logo from "../assets/logo.png";
+// import logo from "../assets/logo.png";
 
 const SuccessCard = ({ orderDetails, onClose }) => {
   if (!orderDetails) return null;
@@ -35,9 +35,9 @@ const SuccessCard = ({ orderDetails, onClose }) => {
       <div className="bg-white rounded-lg w-80 max-w-[90%] shadow-xl relative overflow-hidden">
         {/* Header with close button */}
         <div className="flex items-center justify-between p-4 border-b">
-          <button onClick={onClose} className="p-1 bg-white">
+          {/* <button onClick={onClose} className="p-1 bg-white">
             <X className="w-5 h-5 " />
-          </button>
+          </button> */}
           <div className="text-center flex-1">
             <h1 className="text-lg font-medium">Your Order</h1>
           </div>
@@ -50,7 +50,7 @@ const SuccessCard = ({ orderDetails, onClose }) => {
           <div className="text-center mb-6">
             <div className="mx-auto w-12 h-12 mb-2">
               <img
-                src={logo}
+                src="../assets/logo.png"
                 alt="Restaurant logo"
                 className="w-full h-full object-contain"
               />
@@ -94,17 +94,19 @@ const SuccessCard = ({ orderDetails, onClose }) => {
                 <span className="text-gray-500">Customer</span>
                 <span>{orderDetails.customerInfo?.name}</span>
               </div>
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-500">Phone</span>
-                <span>{orderDetails.customerInfo?.phone}</span>
-              </div>
+              {orderDetails.customerInfo?.phone && (
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-500">Phone</span>
+                  <span>{orderDetails.customerInfo?.phone}</span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-gray-500">Payment Method</span>
                 <span>Cash</span>
               </div>
             </div>
           </div>
-
+          <div className="border-t border-dashed pt-1"></div>
           {/* Barcode */}
           <div className="text-center mb-4">
             {/* <div className="h-12 mb-2">
@@ -131,14 +133,14 @@ const SuccessCard = ({ orderDetails, onClose }) => {
           >
             Cancel
           </motion.button>
-          <motion.button
-            type="submit"
+          <motion.a
+            href="tel:+919064995568"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex-1 px-4 py-3 bg-gradient-to-br from-purple-600 to-purple-400 text-white rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center"
           >
-            <a href="tel:+919064995568">Call</a>
-          </motion.button>
+            Call
+          </motion.a>
         </div>
       </div>
     </motion.div>
