@@ -11,6 +11,7 @@ import OrderForm from "../Components/OrderForm";
 import toast from "react-hot-toast";
 import BrandingBar from "../Components/BrandingBar";
 import Categories from "../Components/Categories";
+import Filter from "@/Components/Filter";
 
 // Mock menu data directly in the component
 const menuItems = [
@@ -429,9 +430,9 @@ export default function Home() {
   };
 
   return (
-    <div className=" flex flex-col min-h-screen bg-gray-50 ">
+    <div className=" flex flex-col min-h-screen bg-gray-50 min-w-full">
       <BrandingBar position="top" />
-      <div className="flex-1 container mx-auto p-6">
+      <div className="flex-1 p-6">
         <RestaurantHeader />
 
         {/* Search and Filters */}
@@ -449,44 +450,20 @@ export default function Home() {
             </div>
 
             {/* Veg/Non-veg filter */}
-            <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 justify-center">
-              <button
-                onClick={() => setFilterVeg(true)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border flex-shrink-0 text-sm sm:text-base ${
-                  filterVeg === true
-                    ? "bg-orange-500 text-white shadow-lg shadow-orange-500/30 transform -translate-y-0.5"
-                    : "bg-white text-gray-600 hover:bg-orange-50"
-                }`}
-              >
-                Veg
-              </button>
-              <button
-                onClick={() => setFilterVeg(false)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border flex-shrink-0 text-sm sm:text-base ${
-                  filterVeg === false
-                    ? "bg-orange-500 text-white shadow-lg shadow-orange-500/30 transform -translate-y-0.5"
-                    : "bg-white text-gray-600 hover:bg-orange-50"
-                }`}
-              >
-                Non-veg
-              </button>
-              <button
-                onClick={() => setFilterVeg(null)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-orange-500 flex-shrink-0 text-sm sm:text-base ${
-                  filterVeg === null
-                    ? "text-white border-orange-500"
-                    : "bg-white text-gray-600 hover:bg-orange-50 border-gray-200"
-                }`}
-              >
-                All
-              </button>
-              <button
-                onClick={() => setShowWaiterCall(true)}
-                className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg border bg-green-600 text-white border-gray-200 flex-shrink-0 text-sm sm:text-base"
-              >
-                Call Waiter
-              </button>
-            </div>
+            <Filter
+              options={[
+                { value: true, label: "Veg" },
+                { value: false, label: "Non-veg" },
+              ]}
+              selectedValue={filterVeg}
+              onChange={setFilterVeg}
+              extraButtons={[
+                {
+                  label: "Call Waiter",
+                  onClick: () => setShowWaiterCall(true),
+                },
+              ]}
+            />
           </div>
 
           {/* Categories */}
@@ -497,7 +474,7 @@ export default function Home() {
           />
 
           {/* Menu Items Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-24">
             {filteredItems.map((item) => {
               const cartItem = cartItems.find(
                 (cartItem) => cartItem.id === item.id

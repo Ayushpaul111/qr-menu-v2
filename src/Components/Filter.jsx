@@ -1,7 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const Categories = ({ categories, selectedCategory, setSelectedCategory }) => {
+const Filter = ({
+  options,
+  selectedValue,
+  onChange,
+  includeAllOption = true,
+  allOptionLabel = "All",
+  extraButtons = [],
+}) => {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -52,10 +59,10 @@ const Categories = ({ categories, selectedCategory, setSelectedCategory }) => {
       }
       resizeObserver.disconnect();
     };
-  }, [categories]);
+  }, [options, extraButtons]);
 
   return (
-    <div className="mb-6 relative w-full">
+    <div className="relative w-full">
       {showLeftArrow && (
         <button
           onClick={() => scroll("left")}
@@ -71,26 +78,43 @@ const Categories = ({ categories, selectedCategory, setSelectedCategory }) => {
         className="overflow-x-auto w-full scrollbar-hide"
         onScroll={checkScroll}
       >
-        <div className="flex space-x-3 min-w-max px-6">
-          {categories.map((category) => (
+        <div className="flex gap-2 pb-2 px-6 min-w-max">
+          {options.map((option) => (
             <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`
-                px-4 py-2 sm:px-6 sm:py-3 
-                rounded-xl
-                transition-all duration-200 
-                text-center
-                flex-shrink-0
-                text-xs sm:text-sm font-medium
-                ${
-                  selectedCategory === category
-                    ? "bg-orange-500 text-white shadow-md shadow-orange-500/30 transform -translate-x-0.5"
-                    : "bg-white text-gray-600 hover:bg-orange-50"
-                }
-              `}
+              key={option.value}
+              onClick={() => onChange(option.value)}
+              className={`px-4 transition-all duration-200 sm:px-6 py-2 sm:py-3 rounded-lg border flex-shrink-0 text-sm sm:text-base ${
+                selectedValue === option.value
+                  ? "bg-orange-500 text-white shadow-md shadow-orange-500/30 transform -translate-y-0.5"
+                  : "bg-white text-gray-600 hover:bg-orange-50"
+              }`}
             >
-              {category}
+              {option.label}
+            </button>
+          ))}
+
+          {includeAllOption && (
+            <button
+              onClick={() => onChange(null)}
+              className={`px-4 transition-all duration-200 sm:px-6 py-2 sm:py-3 rounded-lg border flex-shrink-0 text-sm sm:text-base ${
+                selectedValue === null
+                  ? "bg-orange-500 text-white shadow-md shadow-orange-500/30 transform -translate-y-0.5"
+                  : "bg-white text-gray-600 hover:bg-orange-50"
+              }`}
+            >
+              {allOptionLabel}
+            </button>
+          )}
+
+          {extraButtons.map((button, index) => (
+            <button
+              key={index}
+              onClick={button.onClick}
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg border ${
+                button.className || "bg-green-600 text-white border-gray-200"
+              } flex-shrink-0 text-sm sm:text-base`}
+            >
+              {button.label}
             </button>
           ))}
         </div>
@@ -109,4 +133,4 @@ const Categories = ({ categories, selectedCategory, setSelectedCategory }) => {
   );
 };
 
-export default Categories;
+export default Filter;
