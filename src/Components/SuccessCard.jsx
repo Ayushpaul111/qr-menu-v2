@@ -1,6 +1,4 @@
-// import { X } from "lucide-react";
 import { motion } from "framer-motion";
-// import logo from "../assets/logo.png";
 
 const SuccessCard = ({ orderDetails, onClose }) => {
   if (!orderDetails) return null;
@@ -32,28 +30,32 @@ const SuccessCard = ({ orderDetails, onClose }) => {
       exit={{ opacity: 0 }}
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
     >
-      <div className="bg-white rounded-lg w-80 max-w-[90%] shadow-xl relative overflow-hidden">
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="bg-white rounded-lg w-80 max-w-[90%] max-h-[90%] overflow-y-auto shadow-xl relative"
+      >
         {/* Header with close button */}
         <div className="flex items-center justify-between p-4 border-b">
-          {/* <button onClick={onClose} className="p-1 bg-white">
-            <X className="w-5 h-5 " />
-          </button> */}
           <div className="text-center flex-1">
             <h1 className="text-lg font-medium">Your Order</h1>
           </div>
-          <div className="w-5"></div> {/* Empty div for balance */}
+          {/* <div className="w-5"></div> Empty div for balance */}
         </div>
 
         {/* Receipt content */}
         <div className="px-6 py-4">
           {/* Restaurant logo and info */}
           <div className="text-center mb-6">
-            <div className="mx-auto w-12 h-12 mb-2">
-              <img
-                src="../assets/logo.png"
-                alt="Restaurant logo"
-                className="w-full h-full object-contain"
-              />
+            <div className="mx-auto mb-2">
+              <a
+                href="https://ehike.in"
+                className="text-xl bg-clip-text text-transparent bg-gradient-to-br from-[#723FCD] to-[#DB9FF5] font-bold italic min-w-fit"
+              >
+                Ehike
+              </a>
             </div>
             <h2 className="font-bold text-lg">Ehike Restaurant</h2>
             <p className="text-sm text-gray-500">{formatDate()}</p>
@@ -109,13 +111,6 @@ const SuccessCard = ({ orderDetails, onClose }) => {
           <div className="border-t border-dashed pt-1"></div>
           {/* Barcode */}
           <div className="text-center mb-4">
-            {/* <div className="h-12 mb-2">
-              <img
-                src="/api/placeholder/200/48"
-                alt="Barcode"
-                className="w-full h-full object-contain"
-              />
-            </div> */}
             <p className="text-sm font-medium mt-2">
               Your Meal Is Currently Being Prepared!
             </p>
@@ -142,7 +137,7 @@ const SuccessCard = ({ orderDetails, onClose }) => {
             Call
           </motion.a>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
