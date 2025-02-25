@@ -81,3 +81,14 @@ button {
     transform: translateY(0);
   }
   
+
+  /* Hide scrollbar for all major browsers */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Chrome, Safari, and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

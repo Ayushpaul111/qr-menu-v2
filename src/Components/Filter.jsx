@@ -13,17 +13,15 @@ const Filter = ({
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
 
-  // Check if scrolling is needed
   const checkScroll = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } =
         scrollContainerRef.current;
       setShowLeftArrow(scrollLeft > 0);
-      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5); // 5px buffer
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5);
     }
   };
 
-  // Handle scrolling
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
       const { clientWidth } = scrollContainerRef.current;
@@ -33,25 +31,17 @@ const Filter = ({
         left: scrollAmount,
         behavior: "smooth",
       });
-
-      // Check scroll position after animation
       setTimeout(checkScroll, 350);
     }
   };
 
-  // Check on mount and when content changes
   useEffect(() => {
     checkScroll();
-    // Set up a resize observer to check when container size changes
-    const resizeObserver = new ResizeObserver(() => {
-      checkScroll();
-    });
-
+    const resizeObserver = new ResizeObserver(() => checkScroll());
     if (scrollContainerRef.current) {
       resizeObserver.observe(scrollContainerRef.current);
       scrollContainerRef.current.addEventListener("scroll", checkScroll);
     }
-
     return () => {
       if (scrollContainerRef.current) {
         resizeObserver.unobserve(scrollContainerRef.current);
@@ -75,7 +65,7 @@ const Filter = ({
 
       <div
         ref={scrollContainerRef}
-        className="overflow-x-auto w-full scrollbar-hide"
+        className="overflow-x-auto w-full hide-scrollbar" // Changed to custom class
         onScroll={checkScroll}
       >
         <div className="flex gap-2 pb-2 px-6 min-w-max">
