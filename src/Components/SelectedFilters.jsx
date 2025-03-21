@@ -20,11 +20,11 @@ const SelectedFilters = ({
         <span className="text-xs text-gray-500">Showing:</span>
 
         {selectedCategory !== "All" && (
-          <div className="flex items-center gap-1 bg-green-100 text-green-700 rounded-full py-1 px-3 text-xs">
+          <div className="flex items-center gap-1 bg-green-100 text-green-700 rounded-b-xl py-1 px-3 text-xs">
             <span>{selectedCategory}</span>
             <button
               onClick={onClearCategory}
-              className="ml-1 bg-green-200 rounded-full p-0.5 bg-transparent"
+              className="ml-1 bg-green-200 rounded-b-xl p-0.5 bg-transparent"
               aria-label="Clear category filter"
             >
               <X size={12} />

@@ -47,7 +47,7 @@ const SearchBar = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle sticky behavior on scroll and close results on mobile scroll
+  // Handle sticky behavior on scroll and close results on scroll
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -59,14 +59,20 @@ const SearchBar = ({
         setIsSticky(shouldBeSticky);
       }
 
-      // Close results on mobile when user is scrolling down
-      if (isMobile && showResults) {
+      // Close results when scrolling down (regardless of device type)
+      // This is the key change - we're removing the isMobile condition to make it work like the Cart
+      if (showResults) {
         const isScrollingDown = currentScrollY > lastScrollY.current;
         const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
 
-        // If scrolling down by more than 15px, close the results
-        if (isScrollingDown && scrollDelta > 15) {
+        // If scrolling down by more than 5px, close the results
+        // Reduced from 15px to 5px to make it more responsive
+        if (isScrollingDown && scrollDelta > 5) {
           setShowResults(false);
+          // Also unfocus the search input when scrolling
+          if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+          }
         }
       }
 
@@ -75,7 +81,7 @@ const SearchBar = ({
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile, showResults]);
+  }, [showResults]); // Only depend on showResults
 
   const handleClear = () => {
     setSearchTerm("");
