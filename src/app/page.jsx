@@ -13,6 +13,7 @@ import BrandingBar from "../Components/BrandingBar";
 import Categories from "../Components/Categories";
 import Filter from "@/Components/Filter";
 import SwipeToOrder from "@/Components/SwipeToOrder";
+import SearchBar from "@/Components/SearchBar";
 
 // Mock menu data directly in the component
 const menuItems = [
@@ -455,34 +456,11 @@ export default function Home() {
         <div className="px-3 sm:px-4 py-3 sm:py-6">
           <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6">
             <div className="relative rounded-lg shadow-md">
-              <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={16}
+              <SearchBar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                filteredItems={filteredItems}
               />
-
-              <input
-                type="text"
-                placeholder="Search menu..."
-                className="w-full pl-10 pr-12 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-base"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck="false"
-                autoCapitalize="off"
-              />
-
-              {searchTerm && (
-                <button
-                  onClick={handleClear}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
-                  aria-label="Clear search"
-                >
-                  <X size={20} className="bg-white" />
-                </button>
-              )}
             </div>
 
             {/* Veg/Non-veg filter */}

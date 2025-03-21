@@ -75,7 +75,7 @@ const Filter = ({
               onClick={() => onChange(option.value)}
               className={`px-4 transition-all duration-200 sm:px-6 py-2 sm:py-3 rounded-lg border flex-shrink-0 text-sm sm:text-base ${
                 selectedValue === option.value
-                  ? "bg-orange-500 text-white shadow-md shadow-orange-500/30 transform -translate-y-0.5"
+                  ? "bg-orange-500 text-white shadow-md shadow-orange-500/30 transform -translate-x-0.5"
                   : "bg-white text-gray-600 hover:bg-orange-50"
               }`}
             >
@@ -88,7 +88,7 @@ const Filter = ({
               onClick={() => onChange(null)}
               className={`px-4 transition-all duration-200 sm:px-6 py-2 sm:py-3 rounded-lg border flex-shrink-0 text-sm sm:text-base ${
                 selectedValue === null
-                  ? "bg-orange-500 text-white shadow-md shadow-orange-500/30 transform -translate-y-0.5"
+                  ? "bg-orange-500 text-white shadow-md shadow-orange-500/30 transform -translate-x-0.5"
                   : "bg-white text-gray-600 hover:bg-orange-50"
               }`}
             >
