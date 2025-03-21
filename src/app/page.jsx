@@ -222,7 +222,8 @@ const menuItems = [
     name: "Cheesecake",
     description: "New York style cheesecake with berry compote",
     price: 279,
-    image: "https://images.unsplash.com/photo-1508737027454-e6638a925182?w=400",
+    image:
+      "https://www.onceuponachef.com/images/2017/12/cheesecake-1200x1393.jpg",
     rating: 4.7,
     category: "Desserts",
     isVeg: true,
@@ -232,7 +233,8 @@ const menuItems = [
     name: "Apple Pie",
     description: "Warm apple pie with vanilla ice cream",
     price: 229,
-    image: "https://images.unsplash.com/photo-1568571780765-9276235b0918?w=400",
+    image:
+      "https://sugarspunrun.com/wp-content/uploads/2024/11/Easy-apple-pie-recipe-1-of-1.jpg",
     rating: 4.5,
     category: "Desserts",
     isVeg: true,
