@@ -445,6 +445,13 @@ export default function Home() {
     setItemCounts({});
     setSuccessDetails(null);
   };
+  const handleClearCategory = () => {
+    setSelectedCategory("All");
+  };
+
+  const handleClearVeg = () => {
+    setFilterVeg(null);
+  };
 
   return (
     <div className=" flex flex-col min-h-screen bg-gray-50 min-w-full select-none">
@@ -460,6 +467,10 @@ export default function Home() {
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 filteredItems={filteredItems}
+                selectedCategory={selectedCategory}
+                filterVeg={filterVeg}
+                onClearCategory={handleClearCategory}
+                onClearVeg={handleClearVeg}
               />
             </div>
 

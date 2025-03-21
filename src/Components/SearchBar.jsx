@@ -2,8 +2,17 @@
 import { useState, useRef, useEffect } from "react";
 import { Search, X, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import SelectedFilters from "./SelectedFilters";
 
-const SearchBar = ({ searchTerm, setSearchTerm, filteredItems }) => {
+const SearchBar = ({
+  searchTerm,
+  setSearchTerm,
+  filteredItems,
+  selectedCategory,
+  filterVeg,
+  onClearCategory,
+  onClearVeg,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -173,6 +182,14 @@ const SearchBar = ({ searchTerm, setSearchTerm, filteredItems }) => {
               </AnimatePresence>
             </div>
           </motion.div>
+
+          <SelectedFilters
+            selectedCategory={selectedCategory}
+            filterVeg={filterVeg}
+            onClearCategory={onClearCategory}
+            onClearVeg={onClearVeg}
+            isVisible={isSticky}
+          />
 
           {/* Search results dropdown */}
           <AnimatePresence>
