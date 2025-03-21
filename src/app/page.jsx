@@ -499,23 +499,56 @@ export default function Home() {
           />
 
           {/* Menu Items Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-24">
-            {filteredItems.map((item) => {
-              const cartItem = cartItems.find(
-                (cartItem) => cartItem.id === item.id
-              );
-              const count = cartItem ? cartItem.quantity : 0;
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item) => {
+                const cartItem = cartItems.find(
+                  (cartItem) => cartItem.id === item.id
+                );
+                const count = cartItem ? cartItem.quantity : 0;
 
-              return (
-                <MenuItem
-                  key={item.id}
-                  {...item}
-                  count={count}
-                  onIncrement={() => addToCart(item)}
-                  onDecrement={() => removeFromCart(item)}
+                return (
+                  <MenuItem
+                    key={item.id}
+                    {...item}
+                    count={count}
+                    onIncrement={() => addToCart(item)}
+                    onDecrement={() => removeFromCart(item)}
+                  />
+                );
+              })
+            ) : (
+              <div className="col-span-full flex justify-center items-center py-12 text-gray-500">
+                <div className="text-center">
+                  <div className="mt-4">
+                    <img
+                      src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDFhZ2F2dXRxNjJnOXV4ZXdzb2Y1Njg3ejdoaWhvYXVtMmh2OWkzdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/5YCbKRFhUGHxX5w5RC/giphy.gif"
+                      alt="Empty plate"
+                      className="mx-auto h-32 "
+                    />
+                  </div>
+                  <p className="text-lg font-medium">Try our Must Try Dishes</p>
+                  <p className="text-sm mt-2">
+                    There are no{" "}
+                    {filterVeg !== null ? (filterVeg ? "veg" : "non-veg") : ""}{" "}
+                    items in{" "}
+                    {selectedCategory !== "All"
+                      ? selectedCategory
+                      : "any category"}{" "}
+                    {searchTerm ? `matching "${searchTerm}"` : ""}
+                  </p>
+                </div>
+              </div>
+            )}
+            {filteredItems.length > 0 ? (
+              <div className="mt- text-center col-span-full flex justify-center items-center">
+                <img
+                  src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3d0bzlqenp2ZGE4aGF5cXIyZ2JtYTh1czE2dGw5d2xuMzE4eGpubiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/ck4wKjXP0akDa22aqz/giphy.gif"
+                  alt="eating"
+                  className="mx-auto h-32 "
                 />
-              );
-            })}
+              </div>
+            ) : null}
           </div>
         </div>
 

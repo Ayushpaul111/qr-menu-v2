@@ -114,6 +114,11 @@ const SuccessCard = ({ orderDetails, onClose }) => {
             <p className="text-sm font-medium mt-2">
               Your Meal Is Currently Being Prepared!
             </p>
+            <img
+              src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGRsOXd1ZWplMWlpMmFicWs5eWMxNHh2MzBnNWxhb3I2djd4NGg1ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/J6axDheV6g0YzrZuzR/giphy.gif"
+              alt="Empty plate"
+              className="mx-auto h-12 "
+            />
           </div>
         </div>
 
